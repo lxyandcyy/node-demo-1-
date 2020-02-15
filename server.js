@@ -25,16 +25,19 @@ var server = http.createServer(function(request, response) {
 
   if (path === "/") {
     response.statusCode = 200;
-    response.setHeader("Content-Type", "text/css;charset=utf-8");
+    response.setHeader("Content-Type", "text/html;charset=utf-8");
     fs.readFile("./index.html", function(err, data) {
       if (err) {
         console.error(err);
         return;
       }
-      respone.end(data);
+      response.write(data);
+      response.end();
     });
-
-    // response.write(`<h1 class="test">我是h1标签</h1>`);
+  } else if (path === "/style.css") {
+    response.statusCode = 200;
+    response.setHeader("Content-Type", "text/css;charset=utf-8");
+    response.write(`h1{color: red;}`);
     response.end();
   } else {
     response.statusCode = 404;
